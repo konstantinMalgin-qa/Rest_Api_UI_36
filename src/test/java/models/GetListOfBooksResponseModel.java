@@ -9,6 +9,7 @@ import java.util.List;
 public class GetListOfBooksResponseModel {
     String userId, username;
     List<Books> books;
+
     @Data
     public static class Books {
         String isbn, title, subTitle, author, publisher, description, website;

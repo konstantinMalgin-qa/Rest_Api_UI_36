@@ -15,7 +15,7 @@ public class ProfilePage {
             OkButton = $("#closeSmallModal-ok");
     public ElementsCollection bookNames = $$(".mr-2");
     public String deletedRow = ".rt-tr",
-                 binIcon = "#delete-record-undefined";
+            binIcon = "#delete-record-undefined";
 
     public ProfilePage openPage(LoginBodyModel userData) {
         step("Open UI profile", () -> {
@@ -26,10 +26,10 @@ public class ProfilePage {
     }
 
     public ProfilePage removeAds() {
-    step("Remove ads", () -> {
-        executeJavaScript("$('footer').remove();");
-        executeJavaScript("$('#fixedban').remove();");
-    });
+        step("Remove ads", () -> {
+            executeJavaScript("$('footer').remove();");
+            executeJavaScript("$('#fixedban').remove();");
+        });
         return this;
     }
 
@@ -42,14 +42,15 @@ public class ProfilePage {
 
     public ProfilePage clickOnOkButton() {
         step("Confirm removal of a book with UI", () -> {
-        OkButton.click();
-    });
+            OkButton.click();
+        });
         return this;
     }
+
     public ProfilePage closeConfirmationWindow() {
-    step("Close browser confirmation window with UI", () -> {
-        Selenide.confirm();
-    });
+        step("Close browser confirmation window with UI", () -> {
+            Selenide.confirm();
+        });
         return this;
     }
 }
