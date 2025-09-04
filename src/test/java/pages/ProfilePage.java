@@ -3,6 +3,7 @@ package pages;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
+import io.qameta.allure.Step;
 import models.LoginBodyModel;
 
 import static com.codeborne.selenide.Condition.text;
@@ -17,40 +18,35 @@ public class ProfilePage {
     public String deletedRow = ".rt-tr",
             binIcon = "#delete-record-undefined";
 
+    @Step("Open Page")
     public ProfilePage openPage(LoginBodyModel userData) {
-        step("Open UI profile", () -> {
+
             open("/profile");
             userName.shouldHave(text(userData.getUserName()));
-        });
+
         return this;
     }
-
+    @Step("Remove Ads")
     public ProfilePage removeAds() {
-        step("Remove ads", () -> {
-            executeJavaScript("$('footer').remove();");
-            executeJavaScript("$('#fixedban').remove();");
-        });
+        executeJavaScript("$('footer').remove();");
+        executeJavaScript("$('#fixedban').remove();");
         return this;
     }
-
+    @Step("Click On Bin Icon")
     public ProfilePage clickOnBinIcon(String deletedBookTitle) {
-        step("Click delete icon with UI", () -> {
             bookNames.findBy(text(deletedBookTitle)).closest(deletedRow).$(binIcon).click();
-        });
         return this;
     }
-
+    @Step("Click On Ok Button")
     public ProfilePage clickOnOkButton() {
-        step("Confirm removal of a book with UI", () -> {
             OkButton.click();
-        });
         return this;
     }
-
+    @Step("Close Confirmation Window(")
     public ProfilePage closeConfirmationWindow() {
-        step("Close browser confirmation window with UI", () -> {
+
             Selenide.confirm();
-        });
+
         return this;
     }
 }

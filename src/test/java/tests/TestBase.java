@@ -40,7 +40,7 @@ public class TestBase {
     }
 
     @BeforeEach
-    void beforeEachTest() {
+    void addListener() {
         SelenideLogger.addListener("AllureSelenide", new AllureSelenide());
     }
 

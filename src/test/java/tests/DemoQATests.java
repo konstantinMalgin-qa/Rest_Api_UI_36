@@ -11,13 +11,13 @@ import static tests.TestData.PASSWORD;
 import static tests.TestData.USERNAME;
 
 public class DemoQATests extends TestBase {
+    LoginApi loginApi = new LoginApi();
+    BookListApi bookApi = new BookListApi();
 
     @Test
     public void deleteOneOfItemsTest() {
         LoginBodyModel userData = new LoginBodyModel(USERNAME, PASSWORD);
-        LoginApi loginApi = new LoginApi();
 
-        BookListApi bookApi = new BookListApi();
         AddListOfBooksBodyModel bookData = new AddListOfBooksBodyModel();
 
         DeleteUI deleteUI = new DeleteUI();
@@ -38,7 +38,7 @@ public class DemoQATests extends TestBase {
         });
 
         step("Delete a book with UI", () -> {
-            deleteUI.DeleteBookWithUI(loginResponse, userData, bookResponse);
+            deleteUI.deleteBookWithUI(loginResponse, userData, bookResponse);
         });
 
         GetListOfBooksResponseModel userBookResponse = step("Make request to get a list of user's books", () ->

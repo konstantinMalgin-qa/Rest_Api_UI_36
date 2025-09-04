@@ -13,19 +13,23 @@ import static io.qameta.allure.Allure.step;
 public class DeleteUI {
     ProfilePage profilePage = new ProfilePage();
 
-    public void DeleteBookWithUI(LoginResponseModel loginResponse, LoginBodyModel userData, AddListOfBooksResponseModel bookResponse) {
-        step("Authorization with api", () -> {
-            open("/favicon.ico");
-            getWebDriver().manage().addCookie(new Cookie("userName", loginResponse.getUsername()));
-            getWebDriver().manage().addCookie(new Cookie("userID", loginResponse.getUserId()));
-            getWebDriver().manage().addCookie(new Cookie("token", loginResponse.getToken()));
-            getWebDriver().manage().addCookie(new Cookie("expires", loginResponse.getExpires()));
-        });
+    public void deleteBookWithUI (LoginBodyModel userData, AddListOfBooksResponseModel bookResponse) {
 
         profilePage.openPage(userData)
                 .removeAds()
                 .clickOnBinIcon("Learning JavaScript Design Patterns")
                 .clickOnOkButton()
                 .closeConfirmationWindow();
+    }
+    public void authByCookie (
+            LoginResponseModel authResponse
+    ) {
+        step("Authorization with api", () -> {
+            open("/favicon.ico");
+            getWebDriver().manage().addCookie(new Cookie("userName", authResponse.getUsername()));
+            getWebDriver().manage().addCookie(new Cookie("userID", authResponse.getUserId()));
+            getWebDriver().manage().addCookie(new Cookie("token", authResponse.getToken()));
+            getWebDriver().manage().addCookie(new Cookie("expires", authResponse.getExpires()));
+        });
     }
 }
