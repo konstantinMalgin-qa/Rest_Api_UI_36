@@ -21,15 +21,5 @@ public class DeleteUI {
                 .clickOnOkButton()
                 .closeConfirmationWindow();
     }
-    public void authByCookie (
-            LoginResponseModel authResponse
-    ) {
-        step("Authorization with api", () -> {
-            open("/favicon.ico");
-            getWebDriver().manage().addCookie(new Cookie("userName", authResponse.getUsername()));
-            getWebDriver().manage().addCookie(new Cookie("userID", authResponse.getUserId()));
-            getWebDriver().manage().addCookie(new Cookie("token", authResponse.getToken()));
-            getWebDriver().manage().addCookie(new Cookie("expires", authResponse.getExpires()));
-        });
-    }
+
 }

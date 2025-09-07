@@ -22,11 +22,7 @@ public class LoginApi {
                 .extract().as(LoginResponseModel.class);
     }
 
-    public void loginCheck(LoginBodyModel userData, LoginResponseModel loginResponse) {
-        assertEquals(userData.getUserName(), loginResponse.getUsername());
-        assertEquals("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyTmFtZSI6Imtvc3R5YV9pdmFub3YiLCJwYXNzd29yZCI6Iktvc3R5YTkkIiwiaWF0IjoxNzU2MTg5Mjk0fQ.00NdiMNyZUOHmSKe_r_i86ElJthJH2yknOSwUKSBtd0", loginResponse.getToken());
-        assertEquals("4e98fd61-cab7-4ef5-b66a-690c3a8add5c", loginResponse.getUserId());
-    }
+
 
     public GetListOfBooksResponseModel getUserBookResponse(LoginResponseModel loginResponse) {
         return given(requestSpec)

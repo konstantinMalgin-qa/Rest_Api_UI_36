@@ -1,6 +1,7 @@
 package api;
 
 import models.*;
+import org.junit.jupiter.api.Assertions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,15 +12,15 @@ import static specs.BaseSpec.requestSpec;
 import static specs.BaseSpec.responseSpec;
 
 public class BookListApi {
-    public void addBookToISBNCollection(AddListOfBooksBodyModel bookData, LoginResponseModel loginResponse) {
+    public void addBookToISBNCollection(List<String> isbnNumbers, LoginResponseModel loginResponse) {
+        AddListOfBooksBodyModel bookData = new AddListOfBooksBodyModel();
         bookData.setUserId(loginResponse.getUserId());
         List<CollectionOfIsbnsModel> isbnList = new ArrayList<>();
-        CollectionOfIsbnsModel isbn1 = new CollectionOfIsbnsModel();
-        isbn1.setIsbn("9781449325862");
-        isbnList.add(isbn1);
-        CollectionOfIsbnsModel isbn2 = new CollectionOfIsbnsModel();
-        isbn2.setIsbn("9781449331818");
-        isbnList.add(isbn2);
+        for (String isbn : isbnNumbers) {
+            CollectionOfIsbnsModel isbnItem = new CollectionOfIsbnsModel();
+            isbnItem.setIsbn(isbn);
+            isbnList.add(isbnItem);
+        }
         bookData.setCollectionOfIsbns(isbnList);
     }
 
@@ -34,8 +35,12 @@ public class BookListApi {
                 .extract().as(AddListOfBooksResponseModel.class);
     }
 
-    public void booksCheck(AddListOfBooksResponseModel bookResponse) {
-        assertEquals("9781449325862", bookResponse.getBooks().get(0).getIsbn());
-        assertEquals("9781449331818", bookResponse.getBooks().get(1).getIsbn());
+    public void booksCheck(AddListOfBooksResponseModel bookResponse, List<String> expectedISBNS) {
+        Assertions.assertEquals(expectedISBNS.size(), bookResponse.getBooks().size());
+
+        for (int i = 0; i < expectedISBNS.size(); i++) {
+            Assertions.assertEquals(expectedISBNS.get(i), bookResponse.getBooks().get(i).getIsbn()
+                    );
+        }
     }
 }

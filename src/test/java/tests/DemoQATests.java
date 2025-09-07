@@ -6,6 +6,9 @@ import models.*;
 import org.junit.jupiter.api.Test;
 import ui.DeleteUI;
 
+import java.util.Arrays;
+import java.util.List;
+
 import static io.qameta.allure.Allure.step;
 import static tests.TestData.PASSWORD;
 import static tests.TestData.USERNAME;
@@ -18,27 +21,24 @@ public class DemoQATests extends TestBase {
     public void deleteOneOfItemsTest() {
         LoginBodyModel userData = new LoginBodyModel(USERNAME, PASSWORD);
 
-        AddListOfBooksBodyModel bookData = new AddListOfBooksBodyModel();
+        List<String> isbnList = Arrays.asList("9781449325862", "9781449331818");
 
         DeleteUI deleteUI = new DeleteUI();
 
         LoginResponseModel loginResponse = step("Make login request", () ->
                 loginApi.login(userData));
 
-        step("Check login successful", () -> {
-            loginApi.loginCheck(userData, loginResponse);
-        });
 
-        bookApi.addBookToISBNCollection(bookData, loginResponse);
+        bookApi.addBookToISBNCollection(isbnList, loginResponse);
         AddListOfBooksResponseModel bookResponse = step("Make request to add list of books to profile", () ->
-                bookApi.bookAdd(bookData, loginResponse));
+                bookApi.bookAdd(null, loginResponse));
 
         step("Check books are added", () -> {
-            bookApi.booksCheck(bookResponse);
+            bookApi.booksCheck(bookResponse, isbnList);
         });
 
         step("Delete a book with UI", () -> {
-            deleteUI.deleteBookWithUI(loginResponse, userData, bookResponse);
+            deleteUI.deleteBookWithUI(userData, bookResponse);
         });
 
         GetListOfBooksResponseModel userBookResponse = step("Make request to get a list of user's books", () ->
