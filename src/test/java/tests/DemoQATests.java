@@ -4,7 +4,7 @@ import api.BookListApi;
 import api.LoginApi;
 import models.*;
 import org.junit.jupiter.api.Test;
-import ui.DeleteUI;
+import pages.ProfilePage;
 
 import java.util.Arrays;
 import java.util.List;
@@ -23,7 +23,6 @@ public class DemoQATests extends TestBase {
 
         List<String> isbnList = Arrays.asList("9781449325862", "9781449331818");
 
-        DeleteUI deleteUI = new DeleteUI();
 
         LoginResponseModel loginResponse = step("Make login request", () ->
                 loginApi.login(userData));
@@ -38,7 +37,12 @@ public class DemoQATests extends TestBase {
         });
 
         step("Delete a book with UI", () -> {
-            deleteUI.deleteBookWithUI(userData, bookResponse);
+            ProfilePage profilePage = new ProfilePage();
+            profilePage.openPage(userData)
+                    .removeAds()
+                    .clickOnBinIcon("Learning JavaScript Design Patterns") // Название книги
+                    .clickOnOkButton()
+                    .closeConfirmationWindow();
         });
 
         GetListOfBooksResponseModel userBookResponse = step("Make request to get a list of user's books", () ->
