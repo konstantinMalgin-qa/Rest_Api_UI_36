@@ -3,9 +3,9 @@ package models;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
-@Data
 @AllArgsConstructor
+@Data
 public class LoginBodyModel {
-    String userName, password;
-
+    private String userName;
+    private String password;
 }
