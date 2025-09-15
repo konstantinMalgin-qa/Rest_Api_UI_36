@@ -12,8 +12,8 @@ import static io.restassured.http.ContentType.JSON;
 public class BaseSpec {
     public static RequestSpecification requestSpec = with()
             .filter(withCustomTemplates())
-            .contentType(JSON)
-            .log().all();
+            .log().all()
+            .contentType(JSON);
 
     public static ResponseSpecification responseSpec(int expectedStatusCode) {
         return new ResponseSpecBuilder()
